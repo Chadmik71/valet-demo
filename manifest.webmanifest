@@ -1,0 +1,15 @@
+{
+  "name": "Grandview Valet — Demo",
+  "short_name": "Grandview Valet",
+  "description": "Grandview Valet — premium valet pitch demo (sample data)",
+  "start_url": "./index_v2.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#531620",
+  "theme_color": "#531620",
+  "icons": [
+    { "src": "./icon-g.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icon-g.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

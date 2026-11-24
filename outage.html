@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outage Sheet — Chatswood Chase Valet</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=4">
+<style>
+  :root { --maroon: #531620; --bronze: #a48d53; --ink: #222; --muted: #6f6b66; --line: #9a948c; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: var(--ink); background: #ece9e4; }
+  .toolbar { position: sticky; top: 0; background: var(--maroon); color: #fff; padding: 10px 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; z-index: 2; }
+  .toolbar b { flex: 1; min-width: 180px; }
+  .toolbar button { font: inherit; font-weight: 600; border: 0; border-radius: 6px; padding: 8px 14px; cursor: pointer; background: #fff; color: var(--maroon); }
+  .page { background: #fff; width: 297mm; max-width: 100%; min-height: 200mm; margin: 16px auto; padding: 12mm 12mm 10mm; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  h1 { color: var(--maroon); font-size: 22px; margin: 0 0 2px; }
+  h2 { color: var(--maroon); font-size: 15px; margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .sub { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+  ol, ul { margin: 4px 0 6px; padding-left: 20px; font-size: 13px; line-height: 1.45; }
+  li { margin-bottom: 3px; }
+  .box { border: 2px solid var(--maroon); border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+  .box b { color: var(--maroon); }
+  .head { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; margin: 6px 0 8px; }
+  .head span { border-bottom: 1px solid var(--line); min-width: 150px; display: inline-block; height: 18px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  th { background: #f3efe8; color: var(--maroon); text-align: left; padding: 4px 3px; border: 1px solid var(--line); font-size: 10px; line-height: 1.15; }
+  td { border: 1px solid var(--line); height: 9.2mm; padding: 0 3px; }
+  td.n { width: 6mm; text-align: center; color: var(--muted); }
+  .pay { font-size: 9px; color: var(--muted); white-space: nowrap; }
+  .foot { font-size: 10px; color: var(--muted); margin-top: 5px; display: flex; justify-content: space-between; }
+  @media (max-width: 800px) { .cols { grid-template-columns: 1fr; } .page { padding: 16px; } .sheet-wrap { overflow-x: auto; } table { min-width: 900px; } }
+  @page { size: A4 landscape; margin: 8mm; }
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .page { box-shadow: none; margin: 0; padding: 0; width: auto; min-height: 0; page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+    body.sheet-only .page.steps { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <b>Valet outage sheet</b>
+  <button onclick="document.body.classList.remove('sheet-only');print()">Print steps + sheet</button>
+  <button onclick="document.body.classList.add('sheet-only');print()">Print sheet only</button>
+</div>
+
+<!-- PAGE 1 — what to do -->
+<div class="page steps">
+  <h1>Internet down? What to do</h1>
+  <div class="sub">Chatswood Chase Valet · keep this at the desk with blank sheets and the pre-numbered paper key tags · owner: text or call if anything here doesn't work</div>
+
+  <div class="box"><b>Step 1 (1 minute): is it only the Wi-Fi?</b> Turn on a staff phone's <b>mobile hotspot</b> and connect the tablet to it. If the app goes back online, carry on as normal. Nothing else to do.</div>
+
+  <div class="cols">
+    <div>
+      <h2>Up to about 1 hour: keep using the app</h2>
+      <ol>
+        <li>Use <b>ONE device only</b> to log cars in and out. Devices can't see each other while offline, so two devices could put two cars in the same bay.</li>
+        <li>Keep that device <b>charged and switched on</b>. Don't clear its browser or uninstall the app while the red "not synced" banner shows. Those cars are stored only on that device.</li>
+        <li>The customer's text won't go automatically. On a phone, send it from Messages (it opens filled in). Otherwise tell the customer their <b>ticket number</b>. They can collect by ticket number or plate.</li>
+        <li>Square still works on its own data. <b>Write down what each customer paid and whether by card or cash.</b></li>
+        <li>When the internet is back, the red banner clears by itself. Check it's gone on every device.</li>
+      </ol>
+    </div>
+    <div>
+      <h2>Over 1 hour, or the app won't open: use paper</h2>
+      <ol>
+        <li><b>Paper becomes the record.</b> One row per car on the sheet (page 2), filled in at check-in. Add time out and payment at pickup.</li>
+        <li>Put a <b>pre-numbered paper key tag</b> on the keys. Write that number in the "Key tag no." column and give the customer the matching stub.</li>
+        <li>Cars already in the app can still be checked out on the offline device while it stays charged.</li>
+        <li>At pickup, check the paper row matches the customer's tag number and plate before handing over keys.</li>
+      </ol>
+      <h2>When the internet is back</h2>
+      <ol>
+        <li>App → <b>New Entry</b> → <b>Enter paper cars</b>. Type each row: date, key tag no., rego, brand, name, mobile, bay, time in. If collected, tick <b>Car already collected</b> and add time out, paid by, fee and tip. Press <b>Save &amp; next</b>.</li>
+        <li>No text is sent and no key tag prints for these cars. They show <b>PAPER</b> in the Full Log.</li>
+        <li>Type them in <b>within 7 days</b> (sooner is better). Keep the paper sheet with the day's paperwork.</li>
+        <li>Dashboard → <b>Closing check</b>: the card total should match Square for the day.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="box" style="border-color:var(--bronze)"><b>Before every shift:</b> a charged, signed-in spare tablet; this sheet plus blank copies; paper key tags; a pen. Each device should have opened the app once with internet since the last update, so it can open offline.</div>
+</div>
+
+<!-- PAGE 2 — the sheet -->
+<div class="page sheet">
+  <h1>Valet paper sheet</h1>
+  <div class="head">
+    <div>Date: <span></span></div>
+    <div>Staff on shift: <span style="min-width:220px"></span></div>
+    <div>Sheet no.: <span style="min-width:50px"></span></div>
+    <div>Internet down from: <span style="min-width:70px"></span> to: <span style="min-width:70px"></span></div>
+  </div>
+  <div class="sheet-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th style="width:20mm">Key tag no.</th>
+        <th style="width:22mm">Rego</th>
+        <th style="width:22mm">Brand</th>
+        <th style="width:34mm">Customer name</th>
+        <th style="width:28mm">Mobile</th>
+        <th style="width:11mm">Bay</th>
+        <th style="width:15mm">Time in</th>
+        <th style="width:15mm">Time out</th>
+        <th style="width:15mm">Fee paid $</th>
+        <th style="width:11mm">Tip $</th>
+        <th style="width:27mm">Paid by<br><span class="pay">Card · Cash · Comp · Not paid</span></th>
+        <th style="width:14mm">Staff</th>
+        <th style="width:12mm">In app ✓</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  </div>
+  <div class="foot"><span>Circle one in "Paid by". Tick "In app" once the row has been typed into the app (Enter paper cars).</span><span>Chatswood Chase Valet · 0427 000 822</span></div>
+</div>
+
+<script>
+  var tb = document.getElementById('rows'), html = '';
+  for (var i = 1; i <= 17; i++) html += '<tr><td class="n">' + i + '</td>' + '<td></td>'.repeat(13) + '</tr>';
+  tb.innerHTML = html;
+</script>
+</body>
+</html>

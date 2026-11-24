@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grandview Valet — Monthly Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root{--maroon:#531620;--gold:#a48d53;--ink:#2b2b2b;--mut:#6b655e;--line:#ebe7df}
+  *{box-sizing:border-box}
+  body{font-family:'Inter',Arial,sans-serif;color:var(--ink);max-width:900px;margin:0 auto;padding:34px;line-height:1.45}
+  h1{color:var(--maroon);font-size:24px;margin:0 0 2px}
+  .sub{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:4px}
+  .intro{color:var(--mut);font-size:13px;margin-bottom:18px}
+  .badge{display:inline-block;background:#f3ece0;color:var(--gold);border:1px solid #e6d9bf;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;vertical-align:middle;margin-left:8px}
+  .cards{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 20px}
+  .c{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:12px;padding:14px 16px}
+  .c .n{font-size:26px;font-weight:800;color:var(--maroon)}
+  .c .l{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);margin-top:4px}
+  .c .s{font-size:11px;color:var(--gold);margin-top:3px}
+  h2{color:var(--maroon);font-size:13px;text-transform:uppercase;letter-spacing:1.4px;border-bottom:2px solid #e0a640;padding-bottom:5px;margin:20px 0 10px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{text-align:left;color:var(--mut);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--line);padding:7px 8px}
+  td{padding:7px 8px;border-bottom:1px solid #f3f0ea}
+  tr.wknd{background:#faf7f1}
+  tr.wknd td:nth-child(2){color:var(--maroon);font-weight:700}
+  .bar{display:inline-block;height:8px;background:linear-gradient(90deg,#d2a957,#531620);border-radius:4px;vertical-align:middle;margin-left:8px}
+  .rev{color:#2f7d4f;font-weight:600}
+  .tot td{border-top:2px solid var(--maroon);font-weight:700;color:var(--maroon)}
+  .foot{margin-top:22px;font-size:11px;color:#999;border-top:1px solid var(--line);padding-top:10px}
+  @media print{body{padding:14px}.noprint{display:none}}
+</style>
+</head>
+<body>
+  <div class="sub">Grandview Valet &middot; Monthly Report</div>
+  <h1 id="title">Monthly Report <span class="badge">Sample data</span></h1>
+  <div class="intro">Daily car volume beside the weather and public &amp; school holidays &mdash; to see what drives demand. In the live app this exports straight from Reports &rarr; Monthly Calendar, so it always matches the day you presented.</div>
+
+  <div class="cards" id="cards"></div>
+
+  <h2>Demand by day type &mdash; avg cars/day</h2>
+  <div class="cards" id="daytype"></div>
+
+  <h2>Daily detail</h2>
+  <table id="tbl"><thead><tr>
+    <th>Date</th><th>Day</th><th>Cars</th><th>Revenue</th><th>Weather</th><th>Max/Min</th><th>Rain</th><th>Holiday</th>
+  </tr></thead><tbody></tbody></table>
+
+  <div class="foot">Grandview Valet &middot; white-label pitch demo &middot; figures are representative sample data. Revenue shown at a $20 per-car valet fee plus time-based parking.</div>
+  <p class="noprint" style="color:var(--gold);font-size:12px">Tip: File &rarr; Print &rarr; "Save as PDF" to keep a copy.</p>
+
+<script>
+(function(){
+  var YEAR=2026, MONTH=9; // October 2026 (0-based month)
+  var monthName='October 2026';
+  document.getElementById('title').firstChild.textContent='Monthly Report — ' + monthName + ' ';
+  var rnd=function(n){var x=Math.sin(n*12.9898)*43758.5453;return x-Math.floor(x);};
+  var days=new Date(YEAR,MONTH+1,0).getDate();
+  var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var wx=[['Clear','☀'],['Partly cloudy','⛅'],['Overcast','☁'],['Drizzle','🌦'],['Rain','🌧']];
+  // NSW October 2026: Labour Day = first Monday (5 Oct)
+  var holidays={ '2026-10-05':'Labour Day' };
+  var rows=[], totCars=0, totRev=0, wkCars=0, wkN=0, wdCars=0, wdN=0;
+  for(var d=1; d<=days; d++){
+    var date=new Date(YEAR,MONTH,d), dow=date.getDay(), seed=d*3+7;
+    var base = dow===6?24: dow===0?16: dow>=4?7:4;
+    var jit=Math.round((rnd(seed*11+5)-0.5)*(dow>=6?10:4));
+    var cars=Math.max(1, base+jit), busy=false;
+    if(dow===6 && rnd(seed*17+9)<0.5){ cars=46+Math.round(rnd(seed*2)*9); busy=true; }
+    // weather
+    var r=rnd(seed*7+3), code, rain;
+    if(busy && dow>=5){ code=3; rain=3+Math.round(r*6);}
+    else if(r<0.16){ code=4; rain=5+Math.round(r*25);}
+    else if(r<0.36){ code=3; rain=1+Math.round(r*4);}
+    else if(r<0.58){ code=2; rain=0;}
+    else if(r<0.80){ code=1; rain=0;}
+    else { code=0; rain=0;}
+    var mx=18+Math.round(rnd(seed*5+1)*9), mn=mx-(7+Math.round(rnd(seed*3+2)*4));
+    var rev=cars*20 + Math.round(cars*rnd(seed)*8); // valet $20/car + parking
+    var iso=YEAR+'-'+String(MONTH+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var hol=holidays[iso]||'';
+    totCars+=cars; totRev+=rev;
+    if(dow===0||dow===6){wkCars+=cars; wkN++;} else {wdCars+=cars; wdN++;}
+    rows.push({d:d,dow:dow,cars:cars,rev:rev,code:code,rain:rain,mx:mx,mn:mn,hol:hol});
+  }
+  var maxCars=Math.max.apply(null,rows.map(function(x){return x.cars;}));
+  // summary cards
+  var cards=[
+    ['n', totCars, 'Cars this month', ''],
+    ['n', (totCars/days).toFixed(1), 'Avg cars / day', ''],
+    ['n', '$'+totRev.toLocaleString(), 'Revenue', 'at $20/car + parking'],
+    ['n', '4.8★', 'Guest rating', ''],
+  ];
+  document.getElementById('cards').innerHTML=cards.map(function(c){
+    return '<div class="c"><div class="n">'+c[1]+'</div><div class="l">'+c[2]+'</div>'+(c[3]?'<div class="s">'+c[3]+'</div>':'')+'</div>';
+  }).join('');
+  document.getElementById('daytype').innerHTML=
+    '<div class="c"><div class="n">'+(wdN?(wdCars/wdN).toFixed(1):'0')+'</div><div class="l">Weekday</div></div>'+
+    '<div class="c"><div class="n">'+(wkN?(wkCars/wkN).toFixed(1):'0')+'</div><div class="l">Weekend</div></div>'+
+    '<div class="c"><div class="n">'+Math.max.apply(null,rows.map(function(x){return x.cars;}))+'</div><div class="l">Busiest day</div></div>';
+  // table
+  var tb=document.querySelector('#tbl tbody');
+  tb.innerHTML=rows.map(function(x){
+    var w=wx[x.code];
+    var wkndCls=(x.dow===0||x.dow===6)?' class="wknd"':'';
+    var barW=Math.round(x.cars/maxCars*90);
+    return '<tr'+wkndCls+'><td>'+x.d+' Oct</td><td>'+dayNames[x.dow]+'</td>'+
+      '<td>'+x.cars+'<span class="bar" style="width:'+barW+'px"></span></td>'+
+      '<td class="rev">$'+x.rev.toLocaleString()+'</td>'+
+      '<td>'+w[1]+' '+w[0]+'</td><td>'+x.mx+'° / '+x.mn+'°</td>'+
+      '<td>'+(x.rain?x.rain+'mm':'—')+'</td><td>'+(x.hol||'')+'</td></tr>';
+  }).join('') +
+  '<tr class="tot"><td colspan="2">Total</td><td>'+totCars+'</td><td>$'+totRev.toLocaleString()+'</td><td colspan="4">Avg '+(totCars/days).toFixed(1)+' cars/day</td></tr>';
+})();
+</script>
+</body>
+</html>
